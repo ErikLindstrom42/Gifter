@@ -17,6 +17,7 @@ namespace Gifter.Repositories
         List<Post> Search(string criterion, bool sortDescending);
 
         List<Post> Hottest(DateTime since, bool sortDescending);
+        List<Post> GetByUserId(int id);
 
     }
 }
