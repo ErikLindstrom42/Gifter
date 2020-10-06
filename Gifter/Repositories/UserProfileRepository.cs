@@ -151,6 +151,41 @@ namespace Gifter.Repositories
             }
         }
 
+        public UserProfile GetByFirebaseUserId(string id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT Id, Name, Bio, Email, DateCreated, ImageUrl
+                                        FROM UserProfile 
+                                        WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    UserProfile userProfile = null;
+                    if (reader.Read())
+                    {
+                        userProfile = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl")
+
+                        };
+                    }
+
+                    reader.Close();
+
+                    return userProfile;
+                }
+            }
+        }
 
 
         //public Post GetPostByIdWithComments(int id)
