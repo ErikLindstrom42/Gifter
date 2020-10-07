@@ -20,6 +20,7 @@ namespace Gifter.Controllers
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
+            Console.WriteLine(firebaseUserId);
             var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
             if (userProfile == null)
             {
@@ -34,22 +35,32 @@ namespace Gifter.Controllers
             return Ok(_userProfileRepository.GetAll());
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var userProfile = _userProfileRepository.GetById(id);
-            if (userProfile == null)
-            {
-                return NotFound();
-            }
-            return Ok(userProfile);
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult Get(int id)
+        //{
+        //    var userProfile = _userProfileRepository.GetById(id);
+        //    if (userProfile == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(userProfile);
+        //}
 
         [HttpPost]
         public IActionResult UserProfile(UserProfile userProfile)
         {
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction("Get", new { id = userProfile.Id }, userProfile);
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserProfile userProfile)
+        {
+            
+          
+            _userProfileRepository.Add(userProfile);
+            return CreatedAtAction(
+                nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseUserId }, userProfile);
         }
 
         [HttpPut("{id}")]
