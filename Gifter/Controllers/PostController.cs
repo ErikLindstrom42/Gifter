@@ -72,22 +72,22 @@ namespace Gifter.Controllers
             return Ok(post);
 
         }
-        [HttpGet("GetPostsByUserId/{id}")]
-        public IActionResult GetPostsByUserId (int id)
-        {
-            var posts = _postRepository.GetByUserId(id);
-            return Ok(posts);
-        }
+        //[HttpGet("GetPostsByUserId/{id}")]
+        //public IActionResult GetPostsByUserId(int id)
+        //{
+        //    var posts = _postRepository.GetByUserId(id);
+        //    return Ok(posts);
+        //}
 
         [HttpGet("search")]
         public IActionResult Search(string q, bool sortDesc)
         {
             return Ok(_postRepository.Search(q, sortDesc));
         }
-        [HttpGet("hottest")]
-        public IActionResult Hottest(DateTime since, bool sortDesc)
-        {
-            return Ok(_postRepository.Hottest(since, sortDesc));
-        }
+        //[HttpGet("hottest")]
+        //public IActionResult Hottest(DateTime since, bool sortDesc)
+        //{
+        //    return Ok(_postRepository.Hottest(since, sortDesc));
+        //}
     }
 }

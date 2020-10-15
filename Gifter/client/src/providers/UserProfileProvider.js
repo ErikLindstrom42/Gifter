@@ -19,8 +19,6 @@ export function UserProfileProvider(props) {
   }, []);
 
   const login = (email, pw) => {
-      console.log(email)
-      console.log(pw)
     return firebase.auth().signInWithEmailAndPassword(email, pw)
       .then((signInResponse) => getUserProfile(signInResponse.user.uid))
       .then((userProfile) => {

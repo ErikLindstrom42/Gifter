@@ -2,7 +2,6 @@ C:\Users\elind\workspace\csharp\Gifter\Gifter\bin\Debug\netcoreapp3.1\appsetting
 C:\Users\elind\workspace\csharp\Gifter\Gifter\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\elind\workspace\csharp\Gifter\Gifter\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\elind\workspace\csharp\Gifter\Gifter\bin\Debug\netcoreapp3.1\Gifter.exe
-C:\Users\elind\workspace\csharp\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.csprojAssemblyReference.cache
 C:\Users\elind\workspace\csharp\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.AssemblyInfoInputs.cache
 C:\Users\elind\workspace\csharp\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.AssemblyInfo.cs
 C:\Users\elind\workspace\csharp\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.RazorTargetAssemblyInfo.cache

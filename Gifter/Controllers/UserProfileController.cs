@@ -35,6 +35,17 @@ namespace Gifter.Controllers
             return Ok(_userProfileRepository.GetAll());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var userProfile = _userProfileRepository.GetById(id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
         //[HttpGet("{id}")]
         //public IActionResult Get(int id)
         //{
@@ -46,12 +57,13 @@ namespace Gifter.Controllers
         //    return Ok(userProfile);
         //}
 
-        [HttpPost]
-        public IActionResult UserProfile(UserProfile userProfile)
-        {
-            _userProfileRepository.Add(userProfile);
-            return CreatedAtAction("Get", new { id = userProfile.Id }, userProfile);
-        }
+        // Removed to use Firebase instead
+        //[HttpPost]
+        //public IActionResult UserProfile(UserProfile userProfile)
+        //{
+        //    _userProfileRepository.Add(userProfile);
+        //    return CreatedAtAction("Get", new { id = userProfile.Id }, userProfile);
+        //}
 
         [HttpPost]
         public IActionResult Register(UserProfile userProfile)
