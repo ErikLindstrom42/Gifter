@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Gifter.Repositories;
 using Gifter.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gifter.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -13,6 +15,18 @@ namespace Gifter.Controllers
         public UserProfileController(IUserProfileRepository userProfileRepository)
         {
             _userProfileRepository = userProfileRepository;
+        }
+
+        [HttpGet("{firebaseUserId}")]
+        public IActionResult GetByFirebaseUserId(string firebaseUserId)
+        {
+            Console.WriteLine(firebaseUserId);
+            var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         [HttpGet]
@@ -32,11 +46,33 @@ namespace Gifter.Controllers
             return Ok(userProfile);
         }
 
+        //[HttpGet("{id}")]
+        //public IActionResult Get(int id)
+        //{
+        //    var userProfile = _userProfileRepository.GetById(id);
+        //    if (userProfile == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(userProfile);
+        //}
+
+        // Removed to use Firebase instead
+        //[HttpPost]
+        //public IActionResult UserProfile(UserProfile userProfile)
+        //{
+        //    _userProfileRepository.Add(userProfile);
+        //    return CreatedAtAction("Get", new { id = userProfile.Id }, userProfile);
+        //}
+
         [HttpPost]
-        public IActionResult UserProfile(UserProfile userProfile)
+        public IActionResult Register(UserProfile userProfile)
         {
+            
+          
             _userProfileRepository.Add(userProfile);
-            return CreatedAtAction("Get", new { id = userProfile.Id }, userProfile);
+            return CreatedAtAction(
+                nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseUserId }, userProfile);
         }
 
         [HttpPut("{id}")]

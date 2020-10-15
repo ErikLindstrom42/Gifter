@@ -115,6 +115,45 @@ namespace Gifter.Repositories
         //        }
         //    }
         //}
+        public UserProfile GetByFirebaseUserId(string fireBaseUserId)
+        {
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT Id, Name, Bio, Email, DateCreated, ImageUrl, FirebaseUserId
+                                        FROM UserProfile 
+                                        WHERE FirebaseUserId = @FirebaseUserId";
+
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", fireBaseUserId);
+                    var reader = cmd.ExecuteReader();
+
+                    UserProfile userProfile = null;
+                    if (reader.Read())
+                    {
+                        userProfile = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Bio = DbUtils.GetString(reader, "Bio"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            FirebaseUserId = DbUtils.GetString(reader,"FirebaseUserId")
+
+                        };
+                    }
+
+                    reader.Close();
+
+                    return userProfile;
+                }
+            }
+        }
+
         public UserProfile GetById(int id)
         {
             using (var conn = Connection)
@@ -150,7 +189,6 @@ namespace Gifter.Repositories
                 }
             }
         }
-
 
 
         //public Post GetPostByIdWithComments(int id)
@@ -253,6 +291,7 @@ namespace Gifter.Repositories
                     DbUtils.AddParameter(cmd, "@ImageUrl", userProfile.ImageUrl);
                     DbUtils.AddParameter(cmd, "@Bio", userProfile.Bio);
                     DbUtils.AddParameter(cmd, "@Id", userProfile.Id);
+                    
 
                     cmd.ExecuteNonQuery();
                 }
